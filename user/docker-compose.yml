@@ -1,0 +1,13 @@
+services:
+  pg:
+    image: bitnami/postgresql:latest
+    container_name: user-database
+    ports:
+      - '5482:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=user
+    volumes:
+       - ./docker:/docker-entrypoint-initdb.d   # Scripts de criação inicial
+       - .docker/dbdata:/var/lib/postgresql/data # Dados persistentes
