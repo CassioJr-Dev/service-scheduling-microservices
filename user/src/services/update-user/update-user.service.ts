@@ -23,7 +23,7 @@ export class UpdateUserService {
     private readonly hashProvider: BcryptjsHashProvider,
   ) {}
 
-  async execute(input: UpdateUserInput): Promise<UserEntity> {
+  async execute(input: UpdateUserInput): Promise<Omit<UserEntity, 'password'>> {
     const { userId, ...userPropertys } = input
 
     if (!userId) {
@@ -64,13 +64,14 @@ export class UpdateUserService {
       userPropertys.password = generateHash
     }
 
-    const updateUser = await this.prismaService.user.update({
-      where: {
-        userId,
-      },
-      data: { ...userPropertys },
-    })
+    const { password: removePassword, ...user } =
+      await this.prismaService.user.update({
+        where: {
+          userId,
+        },
+        data: { ...userPropertys },
+      })
 
-    return updateUser
+    return user
   }
 }

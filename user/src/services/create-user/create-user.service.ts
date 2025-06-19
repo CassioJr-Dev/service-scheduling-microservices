@@ -18,7 +18,7 @@ export class CreateUserService {
     private readonly hashProvider: BcryptjsHashProvider,
   ) {}
 
-  async execute(input: CreateUserInput): Promise<UserEntity> {
+  async execute(input: CreateUserInput): Promise<Omit<UserEntity, 'password'>> {
     const { name, email, password, role } = input
 
     const emailExists = await this.prismaService.user.findUnique({
@@ -34,16 +34,17 @@ export class CreateUserService {
     const userId = randomUUID()
     const hashPassword = await this.hashProvider.generateHash(password)
 
-    const createUser = await this.prismaService.user.create({
-      data: {
-        userId,
-        name,
-        email,
-        password: hashPassword,
-        role,
-      },
-    })
+    const { password: removePassword, ...user } =
+      await this.prismaService.user.create({
+        data: {
+          userId,
+          name,
+          email,
+          password: hashPassword,
+          role,
+        },
+      })
 
-    return createUser
+    return user
   }
 }

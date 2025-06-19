@@ -35,6 +35,7 @@ export default tseslint.config(
       '@typescript-eslint/no-empty-interface': 'off',
       '@typescript-eslint/no-namespace': 'off',
       '@typescript-eslint/no-floating-promises': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
 )
