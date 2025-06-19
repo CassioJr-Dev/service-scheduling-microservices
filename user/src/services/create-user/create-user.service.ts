@@ -4,7 +4,7 @@ import { PrismaService } from 'src/database/prisma/prisma.service'
 import { UserEntity, UserRole } from 'src/entities/user.entity'
 import { BcryptjsHashProvider } from 'src/providers/bcryptjs-hash.provider'
 
-export type UserInput = {
+export type CreateUserInput = {
   name: string
   email: string
   password: string
@@ -18,7 +18,7 @@ export class CreateUserService {
     private readonly hashProvider: BcryptjsHashProvider,
   ) {}
 
-  async execute(input: UserInput): Promise<UserEntity> {
+  async execute(input: CreateUserInput): Promise<UserEntity> {
     const { name, email, password, role } = input
 
     const emailExists = await this.prismaService.user.findUnique({
