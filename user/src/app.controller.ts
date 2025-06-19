@@ -9,7 +9,6 @@ import {
   Patch,
   Post,
 } from '@nestjs/common'
-import { AppService } from './app.service'
 import { CreateUserService } from './services/create-user/create-user.service'
 import { UpdateUserService } from './services/update-user/update-user.service'
 import { FindUserService } from './services/find-user/find-user.service'
