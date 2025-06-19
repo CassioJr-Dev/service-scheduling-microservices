@@ -1,15 +1,19 @@
-export class UserEntity {
+import { User } from '@prisma/client'
+
+export class UserEntity implements User {
   userId: string
   name: string
   email: string
   password: string
   role: UserRole
   createdAt: Date
-  updateAt: Date
+  updatedAt: Date
 }
 
-export enum UserRole {
-  ADMIN = 'ADMIN',
-  PROVIDER = 'PROVIDER',
-  CLIENT = 'CLIENT',
-}
+export const UserRole = {
+  ADMIN: 'ADMIN',
+  PROVIDER: 'PROVIDER',
+  CLIENT: 'CLIENT',
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
