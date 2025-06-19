@@ -5,6 +5,7 @@ import { CreateUserService } from './services/create-user/create-user.service'
 import { DatabaseModule } from './database/database.module'
 import { BcryptjsHashProvider } from './providers/bcryptjs-hash.provider'
 import { UpdateUserService } from './services/update-user/update-user.service'
+import { FindUserService } from './services/find-user/find-user.service';
 
 @Module({
   imports: [DatabaseModule],
@@ -14,6 +15,7 @@ import { UpdateUserService } from './services/update-user/update-user.service'
     BcryptjsHashProvider,
     CreateUserService,
     UpdateUserService,
+    FindUserService,
   ],
 })
 export class AppModule {}
