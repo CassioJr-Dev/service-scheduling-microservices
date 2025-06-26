@@ -15,10 +15,10 @@ datasource db {
 
 model Appointment {
   appointmentId String            @id @db.Text
-  createdAt     DateTime          @default(now())
   clientId      String            @db.Text
   serviceId     String            @db.Text
   status        AppointmentStatus @default(PENDING)
+  createdAt     DateTime          @default(now())
   updatedAt     DateTime          @updatedAt
 
   client  User    @relation(fields: [clientId], references: [userId], onDelete: Cascade)
