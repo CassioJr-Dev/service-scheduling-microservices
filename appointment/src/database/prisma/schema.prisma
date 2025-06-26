@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Appointment {
+  appointmentId String            @id @db.Text
+  createdAt     DateTime          @default(now())
+  clientId      String            @db.Text
+  serviceId     String            @db.Text
+  status        AppointmentStatus @default(PENDING)
+  updatedAt     DateTime          @updatedAt
+
+  client  User    @relation(fields: [clientId], references: [userId], onDelete: Cascade)
+  service Catalog @relation(fields: [serviceId], references: [catalogId], onDelete: Cascade)
+
+  @@map("appointment")
+}
+
+model Catalog {
+  catalogId   String   @id @db.Text
+  name        String   @db.VarChar(255)
+  description String   @db.Text
+  isActive    Boolean
+  providerId  String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  provider    User          @relation(fields: [providerId], references: [userId], onDelete: Cascade)
+  Appointment Appointment[]
+
+  @@map("catalog")
+}
+
+model User {
+  userId      String        @id @db.Text
+  name        String        @db.VarChar(255)
+  email       String        @unique @db.VarChar(255)
+  password    String        @db.VarChar(100)
+  role        UserRole
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Catalog     Catalog[]
+  Appointment Appointment[]
+
+  @@map("user")
+}
+
+enum UserRole {
+  ADMIN
+  PROVIDER
+  CLIENT
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}

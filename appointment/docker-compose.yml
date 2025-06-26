@@ -1,0 +1,13 @@
+services:
+  pg:
+    image: bitnami/postgresql:latest
+    container_name: appointment-database
+    ports:
+      - '5472:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=appointment
+    volumes:
+       - ./docker:/docker-entrypoint-initdb.d   # Scripts de criação inicial
+       - .docker/dbdata:/var/lib/postgresql/data # Dados persistentes
