@@ -1,0 +1,25 @@
+### Create catalog
+POST http://localhost:3000/catalog/145e5484-34e3-46c9-9eb5-4e100b8721c1
+Content-Type: application/json
+
+{
+  "name": "Dentista",
+  "description": "faça seu orçamento"
+}
+
+
+### Update catalog
+PATCH http://localhost:3000/catalog/145e5484-34e3-46c9-9eb5-4e100b8721c1/777466f5-e885-459e-9031-8b167c2521cc
+Content-Type: application/json
+
+{
+  "isActive": false
+}
+
+
+### Get catalog by ID
+GET http://localhost:3000/catalog/777466f5-e885-459e-9031-8b167c2521cc
+
+
+### Delete catalog
+DELETE http://localhost:3000/catalog/145e5484-34e3-46c9-9eb5-4e100b8721c1/777466f5-e885-459e-9031-8b167c2521cc

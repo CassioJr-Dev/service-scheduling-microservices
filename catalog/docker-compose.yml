@@ -1,0 +1,13 @@
+services:
+  pg:
+    image: bitnami/postgresql:latest
+    container_name: catalog-database
+    ports:
+      - '5462:5432'
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=catalog
+    volumes:
+       - ./docker:/docker-entrypoint-initdb.d   # Scripts de criação inicial
+       - .docker/dbdata:/var/lib/postgresql/data # Dados persistentes

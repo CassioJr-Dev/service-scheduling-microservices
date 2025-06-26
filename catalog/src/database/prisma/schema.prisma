@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Catalog {
+  catalogId   String   @id @db.Text
+  name        String   @db.VarChar(255)
+  description String   @db.Text
+  isActive    Boolean
+  providerId  String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  provider User @relation(fields: [providerId], references: [userId], onDelete: Cascade)
+
+  @@map("catalog")
+}
+
+model User {
+  userId    String    @id @db.Text
+  name      String    @db.VarChar(255)
+  email     String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(100)
+  role      UserRole
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Catalog   Catalog[]
+
+  @@map("user")
+}
+
+enum UserRole {
+  ADMIN
+  PROVIDER
+  CLIENT
+}
