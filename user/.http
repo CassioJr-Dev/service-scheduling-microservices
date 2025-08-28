@@ -1,0 +1,28 @@
+### Create user
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "name": "Cássio",
+  "email": "cassio@gmail.com",
+  "password": "123456",
+  "role": "PROVIDER"
+}
+
+
+### Update user
+PATCH http://localhost:3000/user/6e529338-33fa-4adf-bb19-f16aefff6613
+Content-Type: application/json
+
+{
+  "name": "Novo Nome",
+  "email": "email@email.com"
+}
+
+
+### Get user by ID
+GET http://localhost:3000/user/b6255803-98a3-46ee-8ccc-965e0969e88c
+
+
+### Delete user
+DELETE http://localhost:3000/user/c3136ba2-7e76-45e8-893e-326561fa0d51
